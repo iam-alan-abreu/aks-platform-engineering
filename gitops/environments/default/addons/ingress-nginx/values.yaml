@@ -1,0 +1,33 @@
+controller:
+  ingressClassResource:
+    name: nginx-internal
+    enabled: true
+    default: false
+    controllerValue: "k8s.io/ingress-nginx-internal"
+  ingressClass: nginx-internal
+  replicaCount: 2
+  service:
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+      service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "snet-services-priv" # Substitua pelo nome da sua subnet
+    loadBalancerIP: "10.10.1.250" # Opcional: definir um IP estático
+    externalTrafficPolicy: Local
+  config:
+    use-forwarded-headers: "true"
+    compute-full-forwarded-for: "true"
+    use-proxy-protocol: "false"
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "10254"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+rbac:
+  create: true
