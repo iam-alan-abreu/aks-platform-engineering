@@ -16,7 +16,7 @@ tolerations:
   effect: NoSchedule
 nodeSelector:
   nodepool-type: system
-
+aasdascas
 repoServer:
   autoscaling:
     enabled: true
