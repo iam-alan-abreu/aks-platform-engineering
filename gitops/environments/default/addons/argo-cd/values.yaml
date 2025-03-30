@@ -63,7 +63,7 @@ server:
     loadBalancerClass: "nginx-internal"
     annotations:
       # https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#loadbalancer-annotations
-      service.beta.kubernetes.io/azure-load-balancer-internal: internal
+      service.beta.kubernetes.io/azure-load-balancer-internal: true
 
 configs:
   cm:
