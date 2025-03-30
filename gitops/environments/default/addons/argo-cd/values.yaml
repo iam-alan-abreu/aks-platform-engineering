@@ -58,11 +58,27 @@ server:
     service:
       annotations:
         prometheus.io/scrape: true
-  service:
-    type: ClusterIP
-    # annotations:
-    #   service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-    # externalTrafficPolicy: Local
+  ingress:
+    enabled: true
+    ingressClassName: nginx-internal
+    annotations:
+      kubernetes.azure.com/tls-cert-keyvault-uri: https://kvmdause2hub.vault.azure.net/certificates/star-brmania-com-br
+      kubernetes.azure.com/use-webhook-admission: "true"
+      service.beta.kubernetes.io/azure-load-balancer-internal: 'true'
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/proxy-body-size: 64m
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "7300"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/use-regex: "true"
+    hostname: argo.brmania.com.br
+    path: /
+    pathType: Prefix
+    tls: true
+    extraTls:
+      - hosts:
+          - argo.brmania.com.br
+        secretName: keyvault-argocd-internal-ingress
 
 configs:
   cm:
