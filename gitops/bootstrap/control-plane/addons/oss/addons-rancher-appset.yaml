@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-azure-apps
+  name: addons-rancher
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
@@ -12,14 +12,14 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: azure-apps
+                addonChart: rancher
                 # anything not staging or prod use this version
-                addonChartVersion: 0.15.0
+                addonChartVersion: 2.10.3
                 #addonChartRepositoryNamespace: adfinis
-                addonChartRepository: https://charts.adfinis.com
+                addonChartRepository: https://releases.rancher.com/server-charts/stable
               selector:
                 matchExpressions:
-                  - key: enable_azure_apps
+                  - key: enable_rancher
                     operator: In
                     values: ['true']
           - clusters:
