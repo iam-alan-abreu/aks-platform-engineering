@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-kargo
+  name: addons-azure-apps
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
@@ -19,7 +19,7 @@ spec:
                 addonChartRepository: charts.adfinis.com
               selector:
                 matchExpressions:
-                  - key: enable_kargo
+                  - key: enable_azure_apps
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +27,13 @@ spec:
                 matchLabels:
                   environment: control-plane
               values:
-                addonChartVersion: '{{metadata.labels.kargo_chart_version}}'
+                addonChartVersion: 0.15.0
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: '{{metadata.labels.kargo_chart_version}}'
+                addonChartVersion: 0.15.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
