@@ -59,11 +59,19 @@ server:
     service:
       annotations:
         prometheus.io/scrape: true
-  # service:
-  #   type: ClusterIP
-  #   annotations:
-  #     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-  #   externalTrafficPolicy: Local
+  ingress:
+    enabled: true
+    ingressClassName: webapprouting.kubernetes.azure.com
+    annotations:
+      kubernetes.io/tls-acme: "true"
+    hostname: argo.brmania.com.br
+    path: /
+    pathType: Prefix
+    tls: true
+    extraTls:
+      - hosts:
+          - argo.brmania.com.br
+        secretName: keyvault-argocd-internal-ingress
 
 configs:
   cm:
