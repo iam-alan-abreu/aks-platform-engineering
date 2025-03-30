@@ -9,8 +9,8 @@ controller:
   service:
     annotations:
       service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-      #service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "snet-services-priv" # Substitua pelo nome da sua subnet
-    #loadBalancerIP: "10.10.1.250" # Opcional: definir um IP estático
+      service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "snet-services-priv" # Substitua pelo nome da sua subnet
+    loadBalancerIP: "10.10.1.50" # Opcional: definir um IP estático
     externalTrafficPolicy: Local
   config:
     use-forwarded-headers: "true"
