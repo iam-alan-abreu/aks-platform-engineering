@@ -16,7 +16,7 @@ spec:
                 # anything not staging or prod use this version
                 addonChartVersion: 0.15.0
                 addonChartRepositoryNamespace: adfinis
-                addonChartRepository: charts.adfinis.com
+                addonChartRepository: https://charts.adfinis.com
               selector:
                 matchExpressions:
                   - key: enable_azure_apps
