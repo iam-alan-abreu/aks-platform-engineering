@@ -59,11 +59,11 @@ server:
     service:
       annotations:
         prometheus.io/scrape: true
-  service:
-    type: ClusterIP
-    # annotations:
-    #   service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-    externalTrafficPolicy: Local
+  # service:
+  #   type: ClusterIP
+  #   annotations:
+  #     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  #   externalTrafficPolicy: Local
 
 configs:
   cm:
