@@ -60,6 +60,7 @@ server:
         prometheus.io/scrape: true
   service:
     type: LoadBalancer
+    loadBalancerClass: "nginx-internal"
     annotations:
       # https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#loadbalancer-annotations
       service.beta.kubernetes.io/azure-load-balancer-internal: internal
