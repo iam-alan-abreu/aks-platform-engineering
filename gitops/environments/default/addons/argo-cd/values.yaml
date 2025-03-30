@@ -60,7 +60,7 @@ server:
       annotations:
         prometheus.io/scrape: true
   ingress:
-    enabled: true
+    enabled: false
     ingressClassName: webapprouting.kubernetes.azure.com
     annotations:
       kubernetes.io/tls-acme: "true"
