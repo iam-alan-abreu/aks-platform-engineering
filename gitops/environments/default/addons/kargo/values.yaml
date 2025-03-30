@@ -6,3 +6,11 @@ api:
 
 controller:
   logLevel: "DEBUG"
+
+tolerations:
+- key: CriticalAddonsOnly
+  operator: Equal
+  value: "true"
+  effect: NoSchedule
+nodeSelector:
+  nodepool-type: system
