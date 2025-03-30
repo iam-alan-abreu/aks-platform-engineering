@@ -61,10 +61,9 @@ server:
   service:
     type: ClusterIP
     ports:
-    - name: http
+    - name: tcp-http-argocd
       port: 8080
       protocol: TCP
-      targetPort: 8080
     # annotations:
     #   service.beta.kubernetes.io/azure-load-balancer-internal: "true"
     # externalTrafficPolicy: Local
