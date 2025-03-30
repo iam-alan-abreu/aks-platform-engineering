@@ -27,13 +27,13 @@ spec:
                 matchLabels:
                   environment: control-plane
               values:
-                addonChartVersion: 0.15.0
+                addonChartVersion: 2.10.3
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.15.0
+                addonChartVersion: 2.10.3
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
