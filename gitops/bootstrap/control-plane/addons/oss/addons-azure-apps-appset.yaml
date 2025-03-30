@@ -12,10 +12,10 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: adfinis
+                addonChart: azure-apps
                 # anything not staging or prod use this version
                 addonChartVersion: 0.15.0
-                addonChartRepositoryNamespace: adfinis
+                #addonChartRepositoryNamespace: adfinis
                 addonChartRepository: https://charts.adfinis.com
               selector:
                 matchExpressions:
