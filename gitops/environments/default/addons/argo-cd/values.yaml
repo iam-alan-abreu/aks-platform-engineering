@@ -59,7 +59,7 @@ server:
       annotations:
         prometheus.io/scrape: true
   service:
-    type: ClusterIP
+    type: NodePort
     # annotations:
     #   service.beta.kubernetes.io/azure-load-balancer-internal: "true"
     # externalTrafficPolicy: Local
