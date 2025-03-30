@@ -9,7 +9,6 @@ controller:
     - name: ARGOCD_K8S_CLIENT_QPS #required for Crossplane too many CRDs https://github.com/argoproj/argo-cd/pull/448
       value: '300'
 
-
 tolerations:
 - key: CriticalAddonsOnly
   operator: Equal
@@ -59,19 +58,11 @@ server:
     service:
       annotations:
         prometheus.io/scrape: true
-  ingress:
-    enabled: false
-    ingressClassName: webapprouting.kubernetes.azure.com
-    annotations:
-      kubernetes.io/tls-acme: "true"
-    hostname: argo.brmania.com.br
-    path: /
-    pathType: Prefix
-    tls: true
-    extraTls:
-      - hosts:
-          - argo.brmania.com.br
-        secretName: keyvault-argocd-internal-ingress
+  service:
+    type: ClusterIP
+    # annotations:
+    #   service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    # externalTrafficPolicy: Local
 
 configs:
   cm:
