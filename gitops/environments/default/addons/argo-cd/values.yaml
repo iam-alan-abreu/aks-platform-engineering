@@ -61,8 +61,8 @@ server:
   service:
     type: LoadBalancer
     annotations:
-      # https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#loadbalancer-annotations
-      service.beta.kubernetes.io/azure-load-balancer-internal: true
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    externalTrafficPolicy: Local
 
 configs:
   cm:

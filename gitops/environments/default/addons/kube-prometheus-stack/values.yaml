@@ -1,8 +1,1 @@
 # Helm chart values
-tolerations:
-  - key: CriticalAddonsOnly
-    operator: Equal
-    value: "true"
-    effect: NoSchedule
-nodeSelector:
-  nodepool-type: system
