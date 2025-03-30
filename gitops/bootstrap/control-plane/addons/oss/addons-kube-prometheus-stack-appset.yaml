@@ -29,13 +29,13 @@ spec:
                 matchLabels:
                   environment: staging
               values:
-                addonChartVersion: 50.0.0
+                addonChartVersion: 70.3.0
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 50.0.0
+                addonChartVersion: 70.3.0
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
