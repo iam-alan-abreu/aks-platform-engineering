@@ -11,20 +11,21 @@ prometheus:
               operator: In
               values:
               - "general"
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - prometheus
+          topologyKey: "kubernetes.io/hostname"
     tolerations:
     - key: "kubernetes.azure.com/scalesetpriority"
       operator: "Equal"
       value: "spot"
       effect: "NoSchedule"
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-          matchExpressions:
-          - key: app.kubernetes.io/name
-            operator: In
-            values:
-            - prometheus
-        topologyKey: "kubernetes.io/hostname"
+    
 
 
 # alertmanager:
