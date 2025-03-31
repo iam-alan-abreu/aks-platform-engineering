@@ -15,7 +15,7 @@ spec:
                 addonChart: elasticsearch
                 # anything not staging or prod use this version
                 addonChartVersion: 8.5.1
-                #addonChartRepositoryNamespace: cattle-system
+                addonChartRepositoryNamespace: elastic-search
                 addonChartRepository: https://helm.elastic.co
               selector:
                 matchExpressions:
