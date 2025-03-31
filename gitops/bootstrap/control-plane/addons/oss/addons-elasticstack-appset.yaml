@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-elastic-stack
+  name: addons-elasticstack
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
@@ -15,7 +15,7 @@ spec:
                 addonChart: eck-stack
                 # anything not staging or prod use this version
                 addonChartVersion: 0.14.1
-                addonChartRepositoryNamespace: elastic-stack
+                addonChartRepositoryNamespace: eck-stack
                 addonChartRepository: https://helm.elastic.co
               selector:
                 matchExpressions:
