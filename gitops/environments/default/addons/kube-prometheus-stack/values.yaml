@@ -1,7 +1,7 @@
 prometheus:
   enabled: true
   prometheusSpec:
-    replicas: 2
+    replicas: 2 # (ou mais, conforme necessidade)
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -16,7 +16,16 @@ prometheus:
       operator: "Equal"
       value: "spot"
       effect: "NoSchedule"
-    podAntiAffinity: "hard" # ou "soft"
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app.kubernetes.io/name
+            operator: In
+            values:
+            - prometheus
+        topologyKey: "kubernetes.io/hostname"
+
 
 # alertmanager:
 #   enabled: true
