@@ -1,59 +1,79 @@
 prometheus:
+  enabled: true
+  replicas: 2
   prometheusSpec:
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
           - matchExpressions:
-            - key: "kubernetes.azure.com/scalesetpriority"
-              operator: In
-              values:
-              - "spot"
-            - key: "nodepool-type"
-              operator: In
-              values:
-              - "user"
             - key: "workload-type"
               operator: In
               values:
               - "general"
-            - key: "environment"
-              operator: In
-              values:
-              - "hub"
     tolerations:
     - key: "kubernetes.azure.com/scalesetpriority"
       operator: "Equal"
       value: "spot"
       effect: "NoSchedule"
-    podAntiAffinity: "hard"  # Use "hard" em vez de um objeto
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - prometheus
+        topologyKey: "kubernetes.io/hostname"
 
 alertmanager:
+  enabled: true
   alertmanagerSpec:
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
           - matchExpressions:
-            - key: "kubernetes.azure.com/scalesetpriority"
-              operator: In
-              values:
-              - "spot"
-            - key: "nodepool-type"
-              operator: In
-              values:
-              - "user"
             - key: "workload-type"
               operator: In
               values:
               - "general"
-            - key: "environment"
-              operator: In
-              values:
-              - "hub"
     tolerations:
     - key: "kubernetes.azure.com/scalesetpriority"
       operator: "Equal"
       value: "spot"
       effect: "NoSchedule"
-    podAntiAffinity: "hard"  # Use "hard" em vez de um objeto
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - alertmanager
+        topologyKey: "kubernetes.io/hostname"
+
+grafana:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: "workload-type"
+            operator: In
+            values:
+            - "general"
+  tolerations:
+  - key: "kubernetes.azure.com/scalesetpriority"
+    operator: "Equal"
+    value: "spot"
+    effect: "NoSchedule"
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - grafana
+      topologyKey: "kubernetes.io/hostname"
