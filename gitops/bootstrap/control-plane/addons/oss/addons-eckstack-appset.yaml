@@ -15,7 +15,7 @@ spec:
                 addonChart: eck-stack
                 # anything not staging or prod use this version
                 addonChartVersion: 0.14.1
-                addonChartRepositoryNamespace: eck-stack
+                #addonChartRepositoryNamespace: eck-stack
                 addonChartRepository: https://helm.elastic.co
               selector:
                 matchExpressions:
