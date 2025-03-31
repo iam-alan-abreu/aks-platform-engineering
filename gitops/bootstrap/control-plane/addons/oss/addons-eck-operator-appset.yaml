@@ -14,7 +14,7 @@ spec:
               values:
                 addonChart: eck-operator
                 # anything not staging or prod use this version
-                addonChartVersion: 02.16.1
+                addonChartVersion: 2.16.1
                 addonChartRepositoryNamespace: eck-operator
                 addonChartRepository: https://helm.elastic.co
               selector:
