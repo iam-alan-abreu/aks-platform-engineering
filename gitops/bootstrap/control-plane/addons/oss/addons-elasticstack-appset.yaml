@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-elasticsearch
+  name: addons-elastic-stack
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
@@ -12,14 +12,14 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: elasticsearch
+                addonChart: eck-stack
                 # anything not staging or prod use this version
-                addonChartVersion: 8.5.1
-                addonChartRepositoryNamespace: elastic-search
+                addonChartVersion: 0.14.1
+                addonChartRepositoryNamespace: elastic-stack
                 addonChartRepository: https://helm.elastic.co
               selector:
                 matchExpressions:
-                  - key: enable_elasticsearch
+                  - key: elastic-stack
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +27,13 @@ spec:
                 matchLabels:
                   environment: control-plane
               values:
-                addonChartVersion: 8.5.1
+                addonChartVersion: 0.14.1
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 8.5.1
+                addonChartVersion: 0.14.1
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
