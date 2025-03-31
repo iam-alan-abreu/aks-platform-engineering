@@ -28,54 +28,57 @@ prometheus:
     
 
 
-# alertmanager:
-#   enabled: true
-#   alertmanagerSpec:
-#     affinity:
-#       nodeAffinity:
-#         requiredDuringSchedulingIgnoredDuringExecution:
-#           nodeSelectorTerms:
-#           - matchExpressions:
-#             - key: "workload-type"
-#               operator: In
-#               values:
-#               - "general"
-#     tolerations:
-#     - key: "kubernetes.azure.com/scalesetpriority"
-#       operator: "Equal"
-#       value: "spot"
-#       effect: "NoSchedule"
-#     podAntiAffinity:
-#       requiredDuringSchedulingIgnoredDuringExecution:
-#       - labelSelector:
-#           matchExpressions:
-#           - key: app
-#             operator: In
-#             values:
-#             - alertmanager
-#         topologyKey: "kubernetes.io/hostname"
+alertmanager:
+  enabled: true
+  alertmanagerSpec:
+    replicas: 2 # (ou mais, conforme necessidade)
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: "workload-type"
+              operator: In
+              values:
+              - "general"
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - alertmanager
+          topologyKey: "kubernetes.io/hostname"
+    tolerations:
+    - key: "kubernetes.azure.com/scalesetpriority"
+      operator: "Equal"
+      value: "spot"
+      effect: "NoSchedule"
 
-# grafana:
-#   affinity:
-#     nodeAffinity:
-#       requiredDuringSchedulingIgnoredDuringExecution:
-#         nodeSelectorTerms:
-#         - matchExpressions:
-#           - key: "workload-type"
-#             operator: In
-#             values:
-#             - "general"
-#   tolerations:
-#   - key: "kubernetes.azure.com/scalesetpriority"
-#     operator: "Equal"
-#     value: "spot"
-#     effect: "NoSchedule"
-#   podAntiAffinity:
-#     requiredDuringSchedulingIgnoredDuringExecution:
-#     - labelSelector:
-#         matchExpressions:
-#         - key: app
-#           operator: In
-#           values:
-#           - grafana
-#       topologyKey: "kubernetes.io/hostname"
+grafana:
+  grafanaSpec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: "workload-type"
+              operator: In
+              values:
+              - "general"
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - grafana
+          topologyKey: "kubernetes.io/hostname"
+    tolerations:
+    - key: "kubernetes.azure.com/scalesetpriority"
+      operator: "Equal"
+      value: "spot"
+      effect: "NoSchedule"
+      topologyKey: "kubernetes.io/hostname"
