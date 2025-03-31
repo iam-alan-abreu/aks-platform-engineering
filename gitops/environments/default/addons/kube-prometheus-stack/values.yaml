@@ -1,6 +1,7 @@
 prometheus:
   enabled: true
   prometheusSpec:
+    replicas: 2
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
