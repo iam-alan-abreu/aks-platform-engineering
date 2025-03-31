@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-eck-stack
+  name: addons-eck-operator
 spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
@@ -12,14 +12,14 @@ spec:
         generators:
           - clusters:
               values:
-                addonChart: eck-stack
+                addonChart: eck-operator
                 # anything not staging or prod use this version
-                addonChartVersion: 0.14.1
-                addonChartRepositoryNamespace: eck-stack
+                addonChartVersion: 02.16.1
+                addonChartRepositoryNamespace: eck-operator
                 addonChartRepository: https://helm.elastic.co
               selector:
                 matchExpressions:
-                  - key: enable_eck_stack
+                  - key: enable_eck_operator
                     operator: In
                     values: ['true']
           - clusters:
@@ -27,13 +27,13 @@ spec:
                 matchLabels:
                   environment: control-plane
               values:
-                addonChartVersion: 0.14.1
+                addonChartVersion: 2.16.1
           - clusters:
               selector:
                 matchLabels:
                   environment: prod
               values:
-                addonChartVersion: 0.14.1
+                addonChartVersion: 2.16.1
   template:
     metadata:
       name: addon-{{name}}-{{values.addonChart}}
