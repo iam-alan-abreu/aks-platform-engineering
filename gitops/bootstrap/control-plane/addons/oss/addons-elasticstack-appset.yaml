@@ -19,7 +19,7 @@ spec:
                 addonChartRepository: https://helm.elastic.co
               selector:
                 matchExpressions:
-                  - key: elastic-stack
+                  - key: elasticstack
                     operator: In
                     values: ['true']
           - clusters:
