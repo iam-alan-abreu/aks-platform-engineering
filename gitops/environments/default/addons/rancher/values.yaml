@@ -25,8 +25,10 @@ ingress:
 
   tls:
     # options: rancher, letsEncrypt, secret
-    source: secret
-    secretName: keyvault-tools-internal-ingress
+    source: letsEncrypt
+    # If tls.source is set to letsEncrypt, email is required
+    email: "alan.santos_neoris@brmania.com.br"
+    #secretName: keyvault-tools-internal-ingress
   
 extraTolerations:
   - key: "kubernetes.azure.com/scalesetpriority"
