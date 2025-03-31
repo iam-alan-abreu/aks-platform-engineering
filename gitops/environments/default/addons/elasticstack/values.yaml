@@ -1,9 +1,3 @@
-tolerations:
-  - key: "kubernetes.azure.com/scalesetpriority"
-    operator: "Equal"
-    value: "spot"
-    effect: "NoSchedule"
----
 # Default values for eck-stack.
 # This is a YAML-formatted file.
 
