@@ -7,10 +7,42 @@ api:
 controller:
   logLevel: "DEBUG"
 
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: "nodepool-type"
+          operator: In
+          values:
+          - "user"
+        - key: "workload-type"
+          operator: In
+          values:
+          - "general"
+        - key: "environment"
+          operator: In
+          values:
+          - "hub"
 tolerations:
-- key: CriticalAddonsOnly
-  operator: Equal
-  value: "true"
-  effect: NoSchedule
-nodeSelector:
-  nodepool-type: system
+- key: "kubernetes.azure.com/scalesetpriority"
+  operator: "Equal"
+  value: "spot"
+  effect: "NoSchedule"
+podAntiAffinity:
+  requiredDuringSchedulingIgnoredDuringExecution:
+  - labelSelector:
+      matchExpressions:
+      - key: app
+        operator: In
+        values:
+        - kargo
+    topologyKey: "kubernetes.io/hostname"
+
+# tolerations:
+# - key: CriticalAddonsOnly
+#   operator: Equal
+#   value: "true"
+#   effect: NoSchedule
+# nodeSelector:
+#   nodepool-type: system

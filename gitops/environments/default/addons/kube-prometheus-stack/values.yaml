@@ -1,5 +1,6 @@
 prometheus:
   enabled: true
+  replicas: 2
   prometheusSpec:
     affinity:
       nodeAffinity:
