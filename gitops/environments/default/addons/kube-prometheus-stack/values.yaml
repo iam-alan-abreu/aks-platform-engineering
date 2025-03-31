@@ -16,15 +16,7 @@ prometheus:
       operator: "Equal"
       value: "spot"
       effect: "NoSchedule"
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-          matchExpressions:
-          - key: app
-            operator: In
-            values:
-            - prometheus
-        topologyKey: "kubernetes.io/hostname"
+    podAntiAffinity: "hard" # ou "soft"
 
 # alertmanager:
 #   enabled: true
