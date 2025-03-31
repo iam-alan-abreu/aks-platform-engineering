@@ -9,13 +9,20 @@ controller:
     - name: ARGOCD_K8S_CLIENT_QPS #required for Crossplane too many CRDs https://github.com/argoproj/argo-cd/pull/448
       value: '300'
 
-tolerations:
-- key: CriticalAddonsOnly
-  operator: Equal
-  value: "true"
-  effect: NoSchedule
-nodeSelector:
-  nodepool-type: system
+  tolerations:
+  - key: "kubernetes.azure.com/scalesetpriority"
+    operator: "Equal"
+    value: "spot"
+    effect: "NoSchedule"
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: "kubernetes.azure.com/scalesetpriority"
+            operator: In
+            values:
+            - "spot"
 
 repoServer:
   autoscaling:

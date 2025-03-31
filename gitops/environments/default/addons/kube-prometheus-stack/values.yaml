@@ -1,1 +1,102 @@
-# Helm chart values
+prometheus:
+  enabled: true
+  prometheusSpec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: "nodepool-type"
+              operator: In
+              values:
+              - "user"
+            - key: "workload-type"
+              operator: In
+              values:
+              - "general"
+            - key: "environment"
+              operator: In
+              values:
+              - "hub"
+    tolerations:
+    - key: "kubernetes.azure.com/scalesetpriority"
+      operator: "Equal"
+      value: "spot"
+      effect: "NoSchedule"
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - prometheus
+        topologyKey: "kubernetes.io/hostname"
+
+alertmanager:
+  enabled: true
+  alertmanagerSpec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: "nodepool-type"
+              operator: In
+              values:
+              - "user"
+            - key: "workload-type"
+              operator: In
+              values:
+              - "general"
+            - key: "environment"
+              operator: In
+              values:
+              - "hub"
+    tolerations:
+    - key: "kubernetes.azure.com/scalesetpriority"
+      operator: "Equal"
+      value: "spot"
+      effect: "NoSchedule"
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - alertmanager
+        topologyKey: "kubernetes.io/hostname"
+
+grafana:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: "nodepool-type"
+            operator: In
+            values:
+            - "user"
+          - key: "workload-type"
+            operator: In
+            values:
+            - "general"
+          - key: "environment"
+            operator: In
+            values:
+            - "hub"
+  tolerations:
+  - key: "kubernetes.azure.com/scalesetpriority"
+    operator: "Equal"
+    value: "spot"
+    effect: "NoSchedule"
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - grafana
+      topologyKey: "kubernetes.io/hostname"
