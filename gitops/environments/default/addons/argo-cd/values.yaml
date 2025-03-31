@@ -14,15 +14,7 @@ controller:
     operator: "Equal"
     value: "spot"
     effect: "NoSchedule"
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: "kubernetes.azure.com/scalesetpriority"
-            operator: In
-            values:
-            - "spot"
+
 
 repoServer:
   autoscaling:
@@ -40,6 +32,11 @@ repoServer:
     service:
       annotations:
         prometheus.io/scrape: true
+  tolerations:
+  - key: "kubernetes.azure.com/scalesetpriority"
+    operator: "Equal"
+    value: "spot"
+    effect: "NoSchedule"
 
 applicationSet:
   replicaCount: 1 # The controller doesn't scale horizontally, is active-standby replicas
@@ -48,6 +45,11 @@ applicationSet:
     service:
       annotations:
         prometheus.io/scrape: true
+  tolerations:
+  - key: "kubernetes.azure.com/scalesetpriority"
+    operator: "Equal"
+    value: "spot"
+    effect: "NoSchedule"
 
 server:
   autoscaling:
@@ -70,6 +72,11 @@ server:
     annotations:
       # https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#loadbalancer-annotations
       service.beta.kubernetes.io/azure-load-balancer-internal: true
+  tolerations:
+  - key: "kubernetes.azure.com/scalesetpriority"
+    operator: "Equal"
+    value: "spot"
+    effect: "NoSchedule"
 
 configs:
   cm:

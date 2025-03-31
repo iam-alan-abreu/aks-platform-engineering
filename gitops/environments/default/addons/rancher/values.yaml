@@ -27,3 +27,9 @@ ingress:
     # options: rancher, letsEncrypt, secret
     source: secret
     secretName: keyvault-tools-internal-ingress
+  
+extraTolerations:
+  - key: "kubernetes.azure.com/scalesetpriority"
+    operator: "Equal"
+    value: "spot"
+    effect: "NoSchedule"
