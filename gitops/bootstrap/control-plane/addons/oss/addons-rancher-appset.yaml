@@ -15,7 +15,7 @@ spec:
                 addonChart: rancher
                 # anything not staging or prod use this version
                 addonChartVersion: 2.10.3
-                #addonChartRepositoryNamespace: adfinis
+                addonChartRepositoryNamespace: cattle-system
                 addonChartRepository: https://releases.rancher.com/server-charts/stable
               selector:
                 matchExpressions:
