@@ -19,7 +19,7 @@ spec:
                 addonChartRepository: https://helm.elastic.co
               selector:
                 matchExpressions:
-                  - key: enable_eck-stack
+                  - key: enable_eck_stack
                     operator: In
                     values: ['true']
           - clusters:
