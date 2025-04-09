@@ -1,379 +1,379 @@
 
----
-eck-elasticsearch:
-  enabled: true
-#   nodeSets:
-#   - name: masters
-#     count: 1
-#     config:
-#       node.roles: ["master"]
-#       node.store.allow_mmap: false
-#     podTemplate:
-#       spec:
-#         containers:
-#         - name: elasticsearch
-#           resources:
-#             limits:
-#               memory: 8Gi
-#               cpu: 2
-#         tolerations:
-#         - key: "kubernetes.azure.com/scalesetpriority"
-#           operator: "Equal"
-#           value: "spot"
-#           effect: "NoSchedule"
-#         - key: "nodepool-type"
-#           operator: "Equal"
-#           value: "system"
-#           effect: "NoSchedule"
-#         affinity:
-#           podAntiAffinity:
-#             preferredDuringSchedulingIgnoredDuringExecution:
-#             - weight: 100
-#               podAffinityTerm:
-#                 labelSelector:
-#                   matchExpressions:
-#                   - key: app
-#                     operator: In
-#                     values:
-#                     - elasticsearch
-#                 topologyKey: kubernetes.io/hostname
-#           nodeAffinity:
-#             requiredDuringSchedulingIgnoredDuringExecution:
-#               nodeSelectorTerms:
-#               - matchExpressions:
-#                 - key: nodepool-type
-#                   operator: In
-#                   values:
-#                   - system
-#                   - user
-#             preferredDuringSchedulingIgnoredDuringExecution:
-#             - weight: 10
-#               preference:
-#                 matchExpressions:
-#                 - key: nodepool-type
-#                   operator: In
-#                   values:
-#                   - system
-#             - weight: 1
-#               preference:
-#                 matchExpressions:
-#                 - key: "kubernetes.azure.com/scalesetpriority"
-#                   operator: In
-#                   values:
-#                   - "spot"
-#         topologySpreadConstraints:
-#         - maxSkew: 1
-#           topologyKey: nodepool-type
-#           whenUnsatisfiable: DoNotSchedule
-#           labelSelector:
-#             matchLabels:
-#               app: elasticsearch
-#     # Volume Claim settings.
-#     # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
-#     #
-#     volumeClaimTemplates:
-#     - metadata:
-#         name: elasticsearch-data
-#       spec:
-#         accessModes:
-#         - ReadWriteOnce
-#         resources:
-#           requests:
-#             storage: 10Gi
-#         # Adjust to your storage class name
-#         #
-#         storageClassName: managed
-#   - name: hot
-#     count: 1
-#     config:
-#       node.roles: ["data_hot", "data_content", "ingest"]
-#       # Comment out when setting the vm.max_map_count via initContainer, as these are mutually exclusive.
-#       # For production workloads, it is strongly recommended to increase the kernel setting vm.max_map_count to 262144
-#       # and leave node.store.allow_mmap unset.
-#       # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-virtual-memory.html
-#       #
-#       node.store.allow_mmap: false
-#     podTemplate:
-#       spec:
-#         containers:
-#         - name: elasticsearch
-#           resources:
-#             limits:
-#               memory: 8Gi
-#               cpu: 2
-#         tolerations:
-#         - key: "kubernetes.azure.com/scalesetpriority"
-#           operator: "Equal"
-#           value: "spot"
-#           effect: "NoSchedule"
-#         - key: "nodepool-type"
-#           operator: "Equal"
-#           value: "system"
-#           effect: "NoSchedule"
-#         affinity:
-#           podAntiAffinity:
-#             preferredDuringSchedulingIgnoredDuringExecution:
-#             - weight: 100
-#               podAffinityTerm:
-#                 labelSelector:
-#                   matchExpressions:
-#                   - key: app
-#                     operator: In
-#                     values:
-#                     - elasticsearch
-#                 topologyKey: kubernetes.io/hostname
-#           nodeAffinity:
-#             requiredDuringSchedulingIgnoredDuringExecution:
-#               nodeSelectorTerms:
-#               - matchExpressions:
-#                 - key: nodepool-type
-#                   operator: In
-#                   values:
-#                   - system
-#                   - user
-#             preferredDuringSchedulingIgnoredDuringExecution:
-#             - weight: 10
-#               preference:
-#                 matchExpressions:
-#                 - key: nodepool-type
-#                   operator: In
-#                   values:
-#                   - system
-#             - weight: 1
-#               preference:
-#                 matchExpressions:
-#                 - key: "kubernetes.azure.com/scalesetpriority"
-#                   operator: In
-#                   values:
-#                   - "spot"
-#         topologySpreadConstraints:
-#         - maxSkew: 1
-#           topologyKey: nodepool-type
-#           whenUnsatisfiable: DoNotSchedule
-#           labelSelector:
-#             matchLabels:
-#               app: elasticsearch
-#     # Volume Claim settings.
-#     # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
-#     #
-#     volumeClaimTemplates:
-#     - metadata:
-#         name: elasticsearch-data
-#       spec:
-#         accessModes:
-#         - ReadWriteOnce
-#         resources:
-#           requests:
-#             storage: 10Gi
-#         # Adjust to your storage class name
-#         #
-#         # storageClassName: local-storage
-#   - name: warm
-#     count: 1
-#     config:
-#       node.roles: ["data_warm"]
-#       # Comment out when setting the vm.max_map_count via initContainer, as these are mutually exclusive.
-#       # For production workloads, it is strongly recommended to increase the kernel setting vm.max_map_count to 262144
-#       # and leave node.store.allow_mmap unset.
-#       # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-virtual-memory.html
-#       #
-#       node.store.allow_mmap: false
-#     podTemplate:
-#       spec:
-#         containers:
-#         - name: elasticsearch
-#           resources:
-#             limits:
-#               memory: 8Gi
-#               cpu: 1
-#         tolerations:
-#         - key: "kubernetes.azure.com/scalesetpriority"
-#           operator: "Equal"
-#           value: "spot"
-#           effect: "NoSchedule"
-#         - key: "nodepool-type"
-#           operator: "Equal"
-#           value: "system"
-#           effect: "NoSchedule"
-#         affinity:
-#           podAntiAffinity:
-#             preferredDuringSchedulingIgnoredDuringExecution:
-#             - weight: 100
-#               podAffinityTerm:
-#                 labelSelector:
-#                   matchExpressions:
-#                   - key: app
-#                     operator: In
-#                     values:
-#                     - elasticsearch-master
-#                 topologyKey: kubernetes.io/hostname
-#           nodeAffinity:
-#             requiredDuringSchedulingIgnoredDuringExecution:
-#               nodeSelectorTerms:
-#               - matchExpressions:
-#                 - key: nodepool-type
-#                   operator: In
-#                   values:
-#                   - system
-#                   - user
-#             preferredDuringSchedulingIgnoredDuringExecution:
-#             - weight: 10
-#               preference:
-#                 matchExpressions:
-#                 - key: nodepool-type
-#                   operator: In
-#                   values:
-#                   - system
-#             - weight: 1
-#               preference:
-#                 matchExpressions:
-#                 - key: "kubernetes.azure.com/scalesetpriority"
-#                   operator: In
-#                   values:
-#                   - "spot"
-#         topologySpreadConstraints:
-#         - maxSkew: 1
-#           topologyKey: nodepool-type
-#           whenUnsatisfiable: DoNotSchedule
-#           labelSelector:
-#             matchLabels:
-#               app: elasticsearch-master
-#     # Volume Claim settings.
-#     # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
-#     #
-#     volumeClaimTemplates:
-#     - metadata:
-#         name: elasticsearch-data
-#       spec:
-#         accessModes:
-#         - ReadWriteOnce
-#         resources:
-#           requests:
-#             storage: 20Gi
-#         # Adjust to your storage class name
-#         #
-#         storageClassName: managed
-#   - name: cold
-#     count: 1
-#     config:
-#       node.roles: ["data_cold"]
-#       # Comment out when setting the vm.max_map_count via initContainer, as these are mutually exclusive.
-#       # For production workloads, it is strongly recommended to increase the kernel setting vm.max_map_count to 262144
-#       # and leave node.store.allow_mmap unset.
-#       # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-virtual-memory.html
-#       #
-#       node.store.allow_mmap: false
-#     podTemplate:
-#       spec:
-#         containers:
-#         - name: elasticsearch
-#           resources:
-#             limits:
-#               memory: 8Gi
-#               cpu: 2
-#         tolerations:
-#         - key: "kubernetes.azure.com/scalesetpriority"
-#           operator: "Equal"
-#           value: "spot"
-#           effect: "NoSchedule"
-#         - key: "nodepool-type"
-#           operator: "Equal"
-#           value: "system"
-#           effect: "NoSchedule"
-#         affinity:
-#           podAntiAffinity:
-#             preferredDuringSchedulingIgnoredDuringExecution:
-#             - weight: 100
-#               podAffinityTerm:
-#                 labelSelector:
-#                   matchExpressions:
-#                   - key: app
-#                     operator: In
-#                     values:
-#                     - elasticsearch-master
-#                 topologyKey: kubernetes.io/hostname
-#           nodeAffinity:
-#             requiredDuringSchedulingIgnoredDuringExecution:
-#               nodeSelectorTerms:
-#               - matchExpressions:
-#                 - key: nodepool-type
-#                   operator: In
-#                   values:
-#                   - system
-#                   - user
-#             preferredDuringSchedulingIgnoredDuringExecution:
-#             - weight: 10
-#               preference:
-#                 matchExpressions:
-#                 - key: nodepool-type
-#                   operator: In
-#                   values:
-#                   - system
-#             - weight: 1
-#               preference:
-#                 matchExpressions:
-#                 - key: "kubernetes.azure.com/scalesetpriority"
-#                   operator: In
-#                   values:
-#                   - "spot"
-#         topologySpreadConstraints:
-#         - maxSkew: 1
-#           topologyKey: nodepool-type
-#           whenUnsatisfiable: DoNotSchedule
-#           labelSelector:
-#             matchLabels:
-#               app: elasticsearch-master
-#     # Volume Claim settings.
-#     # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
-#     #
-#     volumeClaimTemplates:
-#     - metadata:
-#         name: elasticsearch-data
-#       spec:
-#         accessModes:
-#         - ReadWriteOnce
-#         resources:
-#           requests:
-#             storage: 20Gi
-#         # Adjust to your storage class name
-#         #
-#         # storageClassName: local-storage
+# ---
+# eck-elasticsearch:
+#   enabled: true
+# #   nodeSets:
+# #   - name: masters
+# #     count: 1
+# #     config:
+# #       node.roles: ["master"]
+# #       node.store.allow_mmap: false
+# #     podTemplate:
+# #       spec:
+# #         containers:
+# #         - name: elasticsearch
+# #           resources:
+# #             limits:
+# #               memory: 8Gi
+# #               cpu: 2
+# #         tolerations:
+# #         - key: "kubernetes.azure.com/scalesetpriority"
+# #           operator: "Equal"
+# #           value: "spot"
+# #           effect: "NoSchedule"
+# #         - key: "nodepool-type"
+# #           operator: "Equal"
+# #           value: "system"
+# #           effect: "NoSchedule"
+# #         affinity:
+# #           podAntiAffinity:
+# #             preferredDuringSchedulingIgnoredDuringExecution:
+# #             - weight: 100
+# #               podAffinityTerm:
+# #                 labelSelector:
+# #                   matchExpressions:
+# #                   - key: app
+# #                     operator: In
+# #                     values:
+# #                     - elasticsearch
+# #                 topologyKey: kubernetes.io/hostname
+# #           nodeAffinity:
+# #             requiredDuringSchedulingIgnoredDuringExecution:
+# #               nodeSelectorTerms:
+# #               - matchExpressions:
+# #                 - key: nodepool-type
+# #                   operator: In
+# #                   values:
+# #                   - system
+# #                   - user
+# #             preferredDuringSchedulingIgnoredDuringExecution:
+# #             - weight: 10
+# #               preference:
+# #                 matchExpressions:
+# #                 - key: nodepool-type
+# #                   operator: In
+# #                   values:
+# #                   - system
+# #             - weight: 1
+# #               preference:
+# #                 matchExpressions:
+# #                 - key: "kubernetes.azure.com/scalesetpriority"
+# #                   operator: In
+# #                   values:
+# #                   - "spot"
+# #         topologySpreadConstraints:
+# #         - maxSkew: 1
+# #           topologyKey: nodepool-type
+# #           whenUnsatisfiable: DoNotSchedule
+# #           labelSelector:
+# #             matchLabels:
+# #               app: elasticsearch
+# #     # Volume Claim settings.
+# #     # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
+# #     #
+# #     volumeClaimTemplates:
+# #     - metadata:
+# #         name: elasticsearch-data
+# #       spec:
+# #         accessModes:
+# #         - ReadWriteOnce
+# #         resources:
+# #           requests:
+# #             storage: 10Gi
+# #         # Adjust to your storage class name
+# #         #
+# #         storageClassName: managed
+# #   - name: hot
+# #     count: 1
+# #     config:
+# #       node.roles: ["data_hot", "data_content", "ingest"]
+# #       # Comment out when setting the vm.max_map_count via initContainer, as these are mutually exclusive.
+# #       # For production workloads, it is strongly recommended to increase the kernel setting vm.max_map_count to 262144
+# #       # and leave node.store.allow_mmap unset.
+# #       # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-virtual-memory.html
+# #       #
+# #       node.store.allow_mmap: false
+# #     podTemplate:
+# #       spec:
+# #         containers:
+# #         - name: elasticsearch
+# #           resources:
+# #             limits:
+# #               memory: 8Gi
+# #               cpu: 2
+# #         tolerations:
+# #         - key: "kubernetes.azure.com/scalesetpriority"
+# #           operator: "Equal"
+# #           value: "spot"
+# #           effect: "NoSchedule"
+# #         - key: "nodepool-type"
+# #           operator: "Equal"
+# #           value: "system"
+# #           effect: "NoSchedule"
+# #         affinity:
+# #           podAntiAffinity:
+# #             preferredDuringSchedulingIgnoredDuringExecution:
+# #             - weight: 100
+# #               podAffinityTerm:
+# #                 labelSelector:
+# #                   matchExpressions:
+# #                   - key: app
+# #                     operator: In
+# #                     values:
+# #                     - elasticsearch
+# #                 topologyKey: kubernetes.io/hostname
+# #           nodeAffinity:
+# #             requiredDuringSchedulingIgnoredDuringExecution:
+# #               nodeSelectorTerms:
+# #               - matchExpressions:
+# #                 - key: nodepool-type
+# #                   operator: In
+# #                   values:
+# #                   - system
+# #                   - user
+# #             preferredDuringSchedulingIgnoredDuringExecution:
+# #             - weight: 10
+# #               preference:
+# #                 matchExpressions:
+# #                 - key: nodepool-type
+# #                   operator: In
+# #                   values:
+# #                   - system
+# #             - weight: 1
+# #               preference:
+# #                 matchExpressions:
+# #                 - key: "kubernetes.azure.com/scalesetpriority"
+# #                   operator: In
+# #                   values:
+# #                   - "spot"
+# #         topologySpreadConstraints:
+# #         - maxSkew: 1
+# #           topologyKey: nodepool-type
+# #           whenUnsatisfiable: DoNotSchedule
+# #           labelSelector:
+# #             matchLabels:
+# #               app: elasticsearch
+# #     # Volume Claim settings.
+# #     # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
+# #     #
+# #     volumeClaimTemplates:
+# #     - metadata:
+# #         name: elasticsearch-data
+# #       spec:
+# #         accessModes:
+# #         - ReadWriteOnce
+# #         resources:
+# #           requests:
+# #             storage: 10Gi
+# #         # Adjust to your storage class name
+# #         #
+# #         # storageClassName: local-storage
+# #   - name: warm
+# #     count: 1
+# #     config:
+# #       node.roles: ["data_warm"]
+# #       # Comment out when setting the vm.max_map_count via initContainer, as these are mutually exclusive.
+# #       # For production workloads, it is strongly recommended to increase the kernel setting vm.max_map_count to 262144
+# #       # and leave node.store.allow_mmap unset.
+# #       # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-virtual-memory.html
+# #       #
+# #       node.store.allow_mmap: false
+# #     podTemplate:
+# #       spec:
+# #         containers:
+# #         - name: elasticsearch
+# #           resources:
+# #             limits:
+# #               memory: 8Gi
+# #               cpu: 1
+# #         tolerations:
+# #         - key: "kubernetes.azure.com/scalesetpriority"
+# #           operator: "Equal"
+# #           value: "spot"
+# #           effect: "NoSchedule"
+# #         - key: "nodepool-type"
+# #           operator: "Equal"
+# #           value: "system"
+# #           effect: "NoSchedule"
+# #         affinity:
+# #           podAntiAffinity:
+# #             preferredDuringSchedulingIgnoredDuringExecution:
+# #             - weight: 100
+# #               podAffinityTerm:
+# #                 labelSelector:
+# #                   matchExpressions:
+# #                   - key: app
+# #                     operator: In
+# #                     values:
+# #                     - elasticsearch-master
+# #                 topologyKey: kubernetes.io/hostname
+# #           nodeAffinity:
+# #             requiredDuringSchedulingIgnoredDuringExecution:
+# #               nodeSelectorTerms:
+# #               - matchExpressions:
+# #                 - key: nodepool-type
+# #                   operator: In
+# #                   values:
+# #                   - system
+# #                   - user
+# #             preferredDuringSchedulingIgnoredDuringExecution:
+# #             - weight: 10
+# #               preference:
+# #                 matchExpressions:
+# #                 - key: nodepool-type
+# #                   operator: In
+# #                   values:
+# #                   - system
+# #             - weight: 1
+# #               preference:
+# #                 matchExpressions:
+# #                 - key: "kubernetes.azure.com/scalesetpriority"
+# #                   operator: In
+# #                   values:
+# #                   - "spot"
+# #         topologySpreadConstraints:
+# #         - maxSkew: 1
+# #           topologyKey: nodepool-type
+# #           whenUnsatisfiable: DoNotSchedule
+# #           labelSelector:
+# #             matchLabels:
+# #               app: elasticsearch-master
+# #     # Volume Claim settings.
+# #     # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
+# #     #
+# #     volumeClaimTemplates:
+# #     - metadata:
+# #         name: elasticsearch-data
+# #       spec:
+# #         accessModes:
+# #         - ReadWriteOnce
+# #         resources:
+# #           requests:
+# #             storage: 20Gi
+# #         # Adjust to your storage class name
+# #         #
+# #         storageClassName: managed
+# #   - name: cold
+# #     count: 1
+# #     config:
+# #       node.roles: ["data_cold"]
+# #       # Comment out when setting the vm.max_map_count via initContainer, as these are mutually exclusive.
+# #       # For production workloads, it is strongly recommended to increase the kernel setting vm.max_map_count to 262144
+# #       # and leave node.store.allow_mmap unset.
+# #       # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-virtual-memory.html
+# #       #
+# #       node.store.allow_mmap: false
+# #     podTemplate:
+# #       spec:
+# #         containers:
+# #         - name: elasticsearch
+# #           resources:
+# #             limits:
+# #               memory: 8Gi
+# #               cpu: 2
+# #         tolerations:
+# #         - key: "kubernetes.azure.com/scalesetpriority"
+# #           operator: "Equal"
+# #           value: "spot"
+# #           effect: "NoSchedule"
+# #         - key: "nodepool-type"
+# #           operator: "Equal"
+# #           value: "system"
+# #           effect: "NoSchedule"
+# #         affinity:
+# #           podAntiAffinity:
+# #             preferredDuringSchedulingIgnoredDuringExecution:
+# #             - weight: 100
+# #               podAffinityTerm:
+# #                 labelSelector:
+# #                   matchExpressions:
+# #                   - key: app
+# #                     operator: In
+# #                     values:
+# #                     - elasticsearch-master
+# #                 topologyKey: kubernetes.io/hostname
+# #           nodeAffinity:
+# #             requiredDuringSchedulingIgnoredDuringExecution:
+# #               nodeSelectorTerms:
+# #               - matchExpressions:
+# #                 - key: nodepool-type
+# #                   operator: In
+# #                   values:
+# #                   - system
+# #                   - user
+# #             preferredDuringSchedulingIgnoredDuringExecution:
+# #             - weight: 10
+# #               preference:
+# #                 matchExpressions:
+# #                 - key: nodepool-type
+# #                   operator: In
+# #                   values:
+# #                   - system
+# #             - weight: 1
+# #               preference:
+# #                 matchExpressions:
+# #                 - key: "kubernetes.azure.com/scalesetpriority"
+# #                   operator: In
+# #                   values:
+# #                   - "spot"
+# #         topologySpreadConstraints:
+# #         - maxSkew: 1
+# #           topologyKey: nodepool-type
+# #           whenUnsatisfiable: DoNotSchedule
+# #           labelSelector:
+# #             matchLabels:
+# #               app: elasticsearch-master
+# #     # Volume Claim settings.
+# #     # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
+# #     #
+# #     volumeClaimTemplates:
+# #     - metadata:
+# #         name: elasticsearch-data
+# #       spec:
+# #         accessModes:
+# #         - ReadWriteOnce
+# #         resources:
+# #           requests:
+# #             storage: 20Gi
+# #         # Adjust to your storage class name
+# #         #
+# #         # storageClassName: local-storage
 
-# # If enabled, will use the eck-kibana chart and deploy a Kibana resource.
+# # # If enabled, will use the eck-kibana chart and deploy a Kibana resource.
+# # #
+# eck-kibana:
+#   enabled: true
+#   # This is also adjusting the kibana reference to the elasticsearch resource named previously so that
+#   # both the eck-elasticsearch and the eck-kibana chart work together by default in the eck-stack chart.
+#   elasticsearchRef:
+#     name: elasticsearch
+
+# # If enabled, will use the eck-agent chart and deploy an Elastic Agent instance.
 # #
-eck-kibana:
-  enabled: true
-  # This is also adjusting the kibana reference to the elasticsearch resource named previously so that
-  # both the eck-elasticsearch and the eck-kibana chart work together by default in the eck-stack chart.
-  elasticsearchRef:
-    name: elasticsearch
+# eck-agent:
+#   enabled: true
 
-# If enabled, will use the eck-agent chart and deploy an Elastic Agent instance.
-#
-eck-agent:
-  enabled: true
+# # If enabled, will use the eck-fleet-server chart and deploy a Fleet Server resource.
+# #
+# eck-fleet-server:
+#   enabled: false
 
-# If enabled, will use the eck-fleet-server chart and deploy a Fleet Server resource.
-#
-eck-fleet-server:
-  enabled: false
+# # If enabled, will use the eck-beats chart and deploy a Beats resource.
+# #
+# eck-beats:
+#   enabled: false
 
-# If enabled, will use the eck-beats chart and deploy a Beats resource.
-#
-eck-beats:
-  enabled: false
+# # If enabled, will use the eck-logstash chart and deploy a Logstash resource.
+# #
+# eck-logstash:
+#   enabled: false
 
-# If enabled, will use the eck-logstash chart and deploy a Logstash resource.
-#
-eck-logstash:
-  enabled: false
+# # If enabled, will use the eck-apm-server chart and deploy a standalone APM Server resource.
+# #
+# eck-apm-server:
+#   enabled: true
 
-# If enabled, will use the eck-apm-server chart and deploy a standalone APM Server resource.
-#
-eck-apm-server:
-  enabled: true
-
-# If enabled, will use the eck-enterprise-search chart and deploy a Enterprise Search resource.
-#
-eck-enterprise-search:
-  enabled: false
+# # If enabled, will use the eck-enterprise-search chart and deploy a Enterprise Search resource.
+# #
+# eck-enterprise-search:
+#   enabled: false
