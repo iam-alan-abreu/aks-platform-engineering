@@ -1,6 +1,7 @@
 
 ---
 eck-elasticsearch:
+  enabled: true
   nodeSets:
   - name: masters
     count: 1
