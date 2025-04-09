@@ -17,7 +17,7 @@ affinity:
           - key: app
             operator: In
             values:
-            - alertmanager
+            - elasticsearch-master
         topologyKey: kubernetes.io/hostname
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
@@ -49,4 +49,4 @@ topologySpreadConstraints:
   whenUnsatisfiable: DoNotSchedule
   labelSelector:
     matchLabels:
-      app: alertmanager
+      app: elasticsearch-master
