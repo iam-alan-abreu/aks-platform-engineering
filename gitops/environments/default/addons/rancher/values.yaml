@@ -17,7 +17,7 @@ ingress:
   pathType: ImplementationSpecific
   path: "/"
   # backend port number
-  servicePort: 443
+  servicePort: 80
 
   # configurationSnippet - Add additional Nginx configuration. This example statically sets a header on the ingress.
   # configurationSnippet: |
@@ -33,3 +33,6 @@ extraTolerations:
     operator: "Equal"
     value: "spot"
     effect: "NoSchedule"
+
+antiAffinity: preferred
+topologyKey: kubernetes.io/hostname
