@@ -4,7 +4,7 @@ controller:
     enabled: true
     default: false
     controllerValue: "k8s.io/ingress-nginx-internal"
-  replicaCount: 2
+  replicaCount: 3
   service:
     annotations:
       service.beta.kubernetes.io/azure-load-balancer-internal: "true"
@@ -28,3 +28,55 @@ controller:
       memory: 512Mi
 rbac:
   create: true
+tolerations:
+- key: "kubernetes.azure.com/scalesetpriority"
+  operator: "Equal"
+  value: "spot"
+  effect: "NoSchedule"
+- key: "nodepool-type"
+  operator: "Equal"
+  value: "system"
+  effect: "NoSchedule"
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 100
+      podAffinityTerm:
+        labelSelector:
+          matchExpressions:
+          - key: app.kubernetes.io/name
+            operator: In
+            values:
+            - '{{ include "ingress-nginx.name" . }}'
+        topologyKey: kubernetes.io/hostname
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: nodepool-type
+          operator: In
+          values:
+          - system
+          - user
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 10
+      preference:
+        matchExpressions:
+        - key: nodepool-type
+          operator: In
+          values:
+          - system
+    - weight: 1
+      preference:
+        matchExpressions:
+        - key: "kubernetes.azure.com/scalesetpriority"
+          operator: In
+          values:
+          - "spot"
+topologySpreadConstraints:
+- maxSkew: 1
+  topologyKey: nodepool-type
+  whenUnsatisfiable: DoNotSchedule
+  labelSelector:
+    matchLabels:
+      app.kubernetes.io/name: '{{ include "ingress-nginx.name" . }}'
