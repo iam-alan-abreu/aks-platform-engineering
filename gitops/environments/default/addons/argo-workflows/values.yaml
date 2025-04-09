@@ -4,10 +4,114 @@ controller:
     - default
   metricsConfig:
     enabled: true
+  tolerations:
+  - key: "kubernetes.azure.com/scalesetpriority"
+    operator: "Equal"
+    value: "spot"
+    effect: "NoSchedule"
+  - key: "nodepool-type"
+    operator: "Equal"
+    value: "system"
+    effect: "NoSchedule"
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - argo-workflows-workflow-controller
+          topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: nodepool-type
+            operator: In
+            values:
+            - system
+            - user
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 10
+        preference:
+          matchExpressions:
+          - key: nodepool-type
+            operator: In
+            values:
+            - system
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: "kubernetes.azure.com/scalesetpriority"
+            operator: In
+            values:
+            - "spot"
+  topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: nodepool-type
+    whenUnsatisfiable: DoNotSchedule
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: argo-workflows-workflow-controller
 workflow:
   serviceAccount:
     # -- Specifies whether a service account should be created in namespaces controller.workflowNamespaces
     create: true
+  tolerations:
+  - key: "kubernetes.azure.com/scalesetpriority"
+    operator: "Equal"
+    value: "spot"
+    effect: "NoSchedule"
+  - key: "nodepool-type"
+    operator: "Equal"
+    value: "system"
+    effect: "NoSchedule"
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - argo-workflows-workflow-controller
+          topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: nodepool-type
+            operator: In
+            values:
+            - system
+            - user
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 10
+        preference:
+          matchExpressions:
+          - key: nodepool-type
+            operator: In
+            values:
+            - system
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: "kubernetes.azure.com/scalesetpriority"
+            operator: In
+            values:
+            - "spot"
+  topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: nodepool-type
+    whenUnsatisfiable: DoNotSchedule
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: argo-workflows-workflow-controller
 server:
   # -- Run the argo server in "secure" mode. Configure this value instead of `--secure` in extraArgs.
   ## See the following documentation for more details on secure mode:
@@ -23,3 +127,55 @@ server:
       value: "false"
     - name: NEW_VERSION_MODAL
       value: "false"
+  tolerations:
+  - key: "kubernetes.azure.com/scalesetpriority"
+    operator: "Equal"
+    value: "spot"
+    effect: "NoSchedule"
+  - key: "nodepool-type"
+    operator: "Equal"
+    value: "system"
+    effect: "NoSchedule"
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - aargocd-server
+          topologyKey: kubernetes.io/hostname
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: nodepool-type
+            operator: In
+            values:
+            - system
+            - user
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 10
+        preference:
+          matchExpressions:
+          - key: nodepool-type
+            operator: In
+            values:
+            - system
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: "kubernetes.azure.com/scalesetpriority"
+            operator: In
+            values:
+            - "spot"
+  topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: nodepool-type
+    whenUnsatisfiable: DoNotSchedule
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: argocd-server
