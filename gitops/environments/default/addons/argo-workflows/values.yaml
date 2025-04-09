@@ -113,6 +113,7 @@ workflow:
       matchLabels:
         app.kubernetes.io/name: argo-workflows-workflow-controller
 server:
+  replicas: 3
   # -- Run the argo server in "secure" mode. Configure this value instead of `--secure` in extraArgs.
   ## See the following documentation for more details on secure mode:
   ## https://argoproj.github.io/argo-workflows/tls/
