@@ -15,10 +15,30 @@ eck-elasticsearch:
 #
 eck-kibana:
   enabled: true
-  # This is also adjusting the kibana reference to the elasticsearch resource named previously so that
-  # both the eck-elasticsearch and the eck-kibana chart work together by default in the eck-stack chart.
+
+  fullnameOverride: kibana
   elasticsearchRef:
     name: elasticsearch
+
+  config:
+    server:
+      publicBaseUrl: "https://kibana.brmania.com.br"
+
+  http:
+    service:
+      metadata:
+        annotations:
+          service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+
+  ingress:
+    enabled: true
+    pathType: Prefix
+    hosts:
+    - host: "https://kibana.brmania.com.br"
+      path: "/"
+    tls:
+      enabled: true
+      secretName: keyvault-tools-internal-ingress
 
 # If enabled, will use the eck-agent chart and deploy an Elastic Agent instance.
 #
