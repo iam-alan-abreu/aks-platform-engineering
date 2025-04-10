@@ -22,7 +22,7 @@ eck-kibana:
 
   config:
     server:
-      publicBaseUrl: "https://kibana.brmania.com.br"
+      publicBaseUrl: https://kibana.brmania.com.br
 
   http:
     service:
@@ -34,7 +34,7 @@ eck-kibana:
     enabled: true
     pathType: Prefix
     hosts:
-    - host: "https://kibana.brmania.com.br"
+    - host: kibana.brmania.com.br
       path: "/"
     tls:
       enabled: true
