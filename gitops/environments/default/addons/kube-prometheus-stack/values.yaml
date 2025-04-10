@@ -172,7 +172,7 @@ alertmanager:
           app: alertmanager
 
 grafana:
-  replicas: 2
+  replicas: 1
   persistence:
     enabled: true
     storageClassName: managed
