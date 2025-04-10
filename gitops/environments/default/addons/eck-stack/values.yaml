@@ -33,6 +33,7 @@ eck-kibana:
   ingress:
     enabled: true
     pathType: Prefix
+    ingressClassName: nginx-internal
     hosts:
     - host: kibana.brmania.com.br
       path: "/"
