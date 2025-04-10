@@ -6,9 +6,40 @@
 #
 eck-elasticsearch:
   enabled: true
-  # This is adjusting the full name of the elasticsearch resource so that both the eck-elasticsearch
-  # and the eck-kibana chart work together by default in the eck-stack chart.
-  fullnameOverride: elasticsearch
+  # Name of the Elasticsearch instance.
+  #
+  fullnameOverride: elasticsearch  
+
+  ingress:
+    enabled: true
+    className: nginx-internal
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true" 
+    pathType: Prefix
+    hosts:
+    - host: kibana.brmania.com.br
+      path: "/"
+    tls:
+      enabled: true
+      secretName: brmania-server-tls
+      hosts:
+        - kibana.brmania.com.br
+
+  nodeSets:
+  - name: default
+    count: 3
+    # Comment out when setting the vm.max_map_count via initContainer, as these are mutually exclusive.
+    # For production workloads, it is strongly recommended to increase the kernel setting vm.max_map_count to 262144
+    # and leave node.store.allow_mmap unset.
+    # ref: https://www.elastic.co/guide/en/cloud-on-k8s/master/k8s-virtual-memory.html
+    #
+    config:
+      node.store.allow_mmap: false
+      # Enable anonymous access to allow GCLB health probes to succeed
+      xpack.security.authc:
+        anonymous:
+          username: anon
+          roles: monitoring_user
   
 
 # If enabled, will use the eck-kibana chart and deploy a Kibana resource.
