@@ -242,6 +242,6 @@ grafana:
       - vision.brmania.com.br
     path: /
     tls:
-    - secretName: brmania-server-tls
+    - secretName: kube-prometheus-stack-tls
       hosts:
       - vision.brmania.com.br
