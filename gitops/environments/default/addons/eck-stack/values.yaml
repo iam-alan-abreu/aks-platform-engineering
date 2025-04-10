@@ -56,10 +56,10 @@ eck-kibana:
     # 0.0.0.0/0
     httpPortName: http
 
-  # http:
-  #   service:   
-  #     spec:
-  #       type: ClusterIP
+  http:
+    service:   
+      spec:
+        type: ClusterIP
   podTemplate:
     spec:
       containers:
