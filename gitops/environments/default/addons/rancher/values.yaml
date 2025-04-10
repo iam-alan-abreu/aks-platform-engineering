@@ -26,7 +26,7 @@ ingress:
   tls:
     # options: rancher, letsEncrypt, secret
     source: secret
-    secretName: keyvault-tools-internal-ingress
+    secretName: rancher-tls
   
 extraTolerations:
   - key: "kubernetes.azure.com/scalesetpriority"
