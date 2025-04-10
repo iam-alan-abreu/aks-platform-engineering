@@ -10,21 +10,6 @@ eck-elasticsearch:
   #
   fullnameOverride: elasticsearch  
 
-  ingress:
-    enabled: true
-    className: nginx-internal
-    annotations:
-      service.beta.kubernetes.io/azure-load-balancer-internal: "true" 
-    pathType: Prefix
-    hosts:
-    - host: kibana.brmania.com.br
-      path: "/"
-    tls:
-      enabled: true
-      secretName: brmania-server-tls
-      hosts:
-        - kibana.brmania.com.br
-
   nodeSets:
   - name: default
     count: 3
