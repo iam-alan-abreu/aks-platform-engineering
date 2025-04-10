@@ -32,8 +32,10 @@ eck-kibana:
 
   ingress:
     enabled: true
-    pathType: Prefix
-    ingressClassName: nginx-internal
+    pathType: ImplementationSpecific
+    className: nginx-internal
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"    
     hosts:
     - host: kibana.brmania.com.br
       path: "/"
