@@ -32,7 +32,7 @@ eck-kibana:
 
   ingress:
     enabled: true
-    pathType: ImplementationSpecific
+    pathType: Prefix
     className: nginx-internal
     annotations:
       service.beta.kubernetes.io/azure-load-balancer-internal: "true"    
@@ -41,7 +41,9 @@ eck-kibana:
       path: "/"
     tls:
       enabled: true
-      secretName: keyvault-tools-internal-ingress
+      secretName: brmania-server-tls
+      hosts:
+        - kibana.brmania.com.br
 
 # If enabled, will use the eck-agent chart and deploy an Elastic Agent instance.
 #
