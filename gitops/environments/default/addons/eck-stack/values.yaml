@@ -40,10 +40,26 @@ eck-kibana:
   #   server:
   #     publicBaseUrl: https://kibana.brmania.com.br
 
-  http:
-    service:   
-      spec:
-        type: ClusterIP
+  service:
+    type: ClusterIP
+    loadBalancerIP: ""
+    port: 5601
+    nodePort: ""
+    labels: {}
+    annotations: {}
+    # cloud.google.com/load-balancer-type: "Internal"
+    # service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
+    # service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    # service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
+    # service.beta.kubernetes.io/cce-load-balancer-internal-vpc: "true"
+    loadBalancerSourceRanges: []
+    # 0.0.0.0/0
+    httpPortName: http
+
+  # http:
+  #   service:   
+  #     spec:
+  #       type: ClusterIP
   podTemplate:
     spec:
       containers:
@@ -62,7 +78,14 @@ eck-kibana:
           httpGet:
             path: /login
             port: 5601
-            scheme: HTTPS
+            scheme: HTTP
+
+readinessProbe:
+  failureThreshold: 3
+  initialDelaySeconds: 20
+  periodSeconds: 20
+  successThreshold: 3
+  timeoutSeconds: 5
 
   ingress:
     enabled: true
