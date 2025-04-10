@@ -27,13 +27,9 @@ eck-kibana:
   http:
     service:
       type: LoadBalancer
-      loadBalancerIP: ""
       port: 5601
-      nodePort: ""
-      labels: {}
       annotations:
         service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-      loadBalancerSourceRanges: []
 
   ingress:
     enabled: true
