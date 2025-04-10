@@ -24,7 +24,7 @@ ingress:
   #   more_set_input_headers "X-Forwarded-Host: {{ .Values.hostname }}";
 
   tls:
-    # options: rancher, letsEncrypt, secret
+    options: secret
     source: secret
     secretName: rancher-tls
   
