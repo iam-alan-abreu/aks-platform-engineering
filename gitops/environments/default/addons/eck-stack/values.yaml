@@ -60,7 +60,7 @@ eck-kibana:
             cpu: 2
         readinessProbe:
           httpGet:
-            path: /status
+            path: /login
             port: 5601
             scheme: HTTP
 
