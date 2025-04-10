@@ -239,9 +239,9 @@ grafana:
     annotations:
       service.beta.kubernetes.io/azure-load-balancer-internal: "true"  
     hosts:
-      - grafana.brmania.com.br
+      - vision.brmania.com.br
     path: /
     tls:
     - secretName: brmania-server-tls
       hosts:
-      - grafana.brmania.com.br
+      - vision.brmania.com.br
