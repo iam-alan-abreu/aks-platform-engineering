@@ -231,3 +231,17 @@ grafana:
     labelSelector:
       matchLabels:
         app.kubernetes.io/name: grafana
+
+
+  ingress:
+    enabled: true
+    ingressClassName: nginx-internal
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"  
+    hosts:
+      - grafana.brmania.com.br
+    path: /
+    tls:
+    - secretName: brmania-server-tls
+      hosts:
+      - grafana.brmania.com.br
