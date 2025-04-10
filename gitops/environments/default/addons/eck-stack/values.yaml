@@ -36,9 +36,9 @@ eck-kibana:
   elasticsearchRef:
     name: elasticsearch
 
-  config:
-    server:
-      publicBaseUrl: https://kibana.brmania.com.br
+  # config:
+  #   server:
+  #     publicBaseUrl: https://kibana.brmania.com.br
 
   http:
     service:   
@@ -58,11 +58,11 @@ eck-kibana:
           limits:
             memory: 2.5Gi
             cpu: 2
-       # readinessProbe: ""
-          # httpGet:
-          #   path: /login
-          #   port: 5601
-          #   scheme: HTTPS
+        readinessProbe:
+          httpGet:
+            path: /login
+            port: 5601
+            scheme: HTTPS
 
   ingress:
     enabled: true
