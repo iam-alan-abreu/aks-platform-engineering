@@ -25,9 +25,8 @@ eck-elasticsearch:
   ingress:
     enabled: true
     pathType: Prefix
-    className: nginx
     annotations:
-      service.beta.kubernetes.io/azure-load-balancer-internal: "true"    
+      service.beta.kubernetes.io/azure-load-balancer-internal: "false"    
     hosts:
     - host: elk.brmania.com.br
       path: "/"
