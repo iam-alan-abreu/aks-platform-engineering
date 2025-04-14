@@ -12,7 +12,7 @@ eck-elasticsearch:
   ingress:
     enabled: true
     pathType: Prefix
-    className: nginx-public
+    className: nginx
     #annotations:
       #service.beta.kubernetes.io/azure-load-balancer-internal: "true"    
     hosts:
