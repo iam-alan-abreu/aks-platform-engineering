@@ -47,24 +47,27 @@ eck-elasticsearch:
     config:
       node.store.allow_mmap: false
       # Enable anonymous access to allow GCLB health probes to succeed
-      xpack.security.authc:
-        anonymous:
-          username: anon
-          roles: monitoring_user
-      xpack.security.enabled: true
-      xpack.security.transport:
-        ssl:
+      xpack:
+        security:
           enabled: true
-          verification_mode: certificate
-          keystore.path: /usr/share/elasticsearch/config/certs/keystore.p12
-          truststore.path: /usr/share/elasticsearch/config/certs/keystore.p12
-      xpack.security.http:
-        ssl:
-          enabled: true
-          verification_mode: certificate
-          keystore.path: /usr/share/elasticsearch/config/certs/keystore.p12
-          truststore.path: /usr/share/elasticsearch/config/certs/keystore.p12
-
+          authc:
+            anonymous:
+              username: anon
+              roles: monitoring_user
+          http:
+            ssl:
+              enabled: true
+              key: certs/cert.key
+              certificate: certs/cert.crt
+          transport:
+            ssl:
+              enabled: true
+              key: certs/cert.key
+              certificate: certs/cert.crt
+      network.host: elk.brmania.com.br
+      network.publish_host: elk.brmania.com.br
+      network.bind_host: 0.0.0.0
+      network.publish_port: 9200
 
     podTemplate:
       spec:
@@ -156,19 +159,21 @@ eck-kibana:
   config:
     server:
       publicBaseUrl: https://kibana.brmania.com.br
-    xpack.security.enabled: true
-    xpack.security.transport:
-      ssl:
+    xpack:
+      security:
         enabled: true
-        verification_mode: certificate
-        keystore.path: /usr/share/elasticsearch/config/certs/keystore.p12
-        truststore.path: /usr/share/elasticsearch/config/certs/keystore.p12
-    xpack.security.http:
-      ssl:
-        enabled: true
-        verification_mode: certificate
-        keystore.path: /usr/share/elasticsearch/config/certs/keystore.p12
-        truststore.path: /usr/share/elasticsearch/config/certs/keystore.p12
+        http:
+          ssl:
+            enabled: true
+            key: certs/cert.key
+            certificate: certs/cert.crt
+            verification_mode: certificate
+        transport:
+          ssl:
+            enabled: true
+            key: certs/cert.key
+            certificate: certs/cert.crt
+            verification_mode: certificate
 
 
   service:
