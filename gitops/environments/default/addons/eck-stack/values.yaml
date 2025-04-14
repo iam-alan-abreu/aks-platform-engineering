@@ -78,9 +78,10 @@ eck-elasticsearch:
                   requests:
                     storage: 50Gi
                 storageClassName: managed
-        # Adjust to your storage class name
-        #
-        storageClassName: managed
+        secretMounts:
+          - name: elasticsearch-certs
+            secretName: elasticsearch-certs
+            path: /usr/share/elasticsearch/config/certs
         tolerations:
         - key: "kubernetes.azure.com/scalesetpriority"
           operator: "Equal"
