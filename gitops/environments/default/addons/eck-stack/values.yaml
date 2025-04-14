@@ -12,7 +12,11 @@ eck-elasticsearch:
   service:
     type: LoadBalancer
     annotations:
-      service.beta.kubernetes.io/azure-load-balancer-internal: "false"    
+      service.beta.kubernetes.io/azure-load-balancer-internal: "false"   
+  http:
+    service:   
+      spec:
+        type: LoadBalancer 
   # ingress:
   #   enabled: true
   #   pathType: Prefix
