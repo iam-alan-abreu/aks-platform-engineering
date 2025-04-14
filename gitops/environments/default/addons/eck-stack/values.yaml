@@ -13,10 +13,8 @@ eck-elasticsearch:
     enabled: true
     annotations:
       service.beta.kubernetes.io/azure-load-balancer-internal: "false" 
-    labels:
-      app: elasticsearch
     pathType: Prefix
-    className: nginx-public
+    className: nginx
     hosts:
     - host: elk.brmania.com.br
       path: "/"
