@@ -11,8 +11,6 @@ eck-elasticsearch:
   fullnameOverride: elasticsearch
   service:
     type: LoadBalancer
-    annotations:
-      service.beta.kubernetes.io/azure-load-balancer-internal: "false"   
   http:
     service:   
       spec:
