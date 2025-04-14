@@ -9,12 +9,22 @@ eck-elasticsearch:
   # Name of the Elasticsearch instance.
   #
   fullnameOverride: elasticsearch
-  service:
-    type: LoadBalancer
-  http:
-    service:   
-      spec:
-        type: LoadBalancer 
+  ingress:
+    enabled: true
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "false" 
+    labels:
+      app: elasticsearch
+    pathType: Prefix
+    className: nginx-public
+    hosts:
+    - host: elk.brmania.com.br
+      path: "/"
+    tls:
+      enabled: true
+      secretName: brmania-server-tls
+      hosts:
+        - elk.brmania.com.br 
   # ingress:
   #   enabled: true
   #   pathType: Prefix
