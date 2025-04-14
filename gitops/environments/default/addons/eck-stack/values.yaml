@@ -86,7 +86,7 @@ eck-kibana:
   http:
     service:   
       spec:
-        type: ClusterIP
+        type: LoadBalancer
   podTemplate:
     spec:
       containers:
@@ -113,21 +113,6 @@ readinessProbe:
   periodSeconds: 20
   successThreshold: 3
   timeoutSeconds: 5
-
-  ingress:
-    enabled: true
-    pathType: Prefix
-    className: nginx-internal
-    annotations:
-      service.beta.kubernetes.io/azure-load-balancer-internal: "true"    
-    hosts:
-    - host: kibana.brmania.com.br
-      path: "/"
-    tls:
-      enabled: true
-      secretName: brmania-server-tls
-      hosts:
-        - kibana.brmania.com.br
 
 # If enabled, will use the eck-agent chart and deploy an Elastic Agent instance.
 #
