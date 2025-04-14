@@ -64,10 +64,6 @@ eck-elasticsearch:
               enabled: true
               key: certs/cert.key
               certificate: certs/cert.crt
-      network.host: elk.brmania.com.br
-      network.publish_host: elk.brmania.com.br
-      network.bind_host: 0.0.0.0
-      network.publish_port: 9200
 
     podTemplate:
       spec:
