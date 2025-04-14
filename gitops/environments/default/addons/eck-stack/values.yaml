@@ -10,13 +10,24 @@ eck-elasticsearch:
   #
   fullnameOverride: elasticsearch
   service:
+    annotations: {}
     type: ClusterIP
+    loadBalancerIP: ""
+    ports:
+      - name: beats
+        port: 5044
+        protocol: TCP
+        targetPort: 5044
+      - name: http
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
   ingress:
     enabled: true
-    annotations:
-      service.beta.kubernetes.io/azure-load-balancer-internal: "false" 
     pathType: Prefix
     className: nginx
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "false"    
     hosts:
     - host: elk.brmania.com.br
       path: "/"
@@ -24,21 +35,7 @@ eck-elasticsearch:
       enabled: true
       secretName: brmania-server-tls
       hosts:
-        - elk.brmania.com.br 
-  # ingress:
-  #   enabled: true
-  #   pathType: Prefix
-  #   className: nginx
-  #   annotations:
-  #     service.beta.kubernetes.io/azure-load-balancer-internal: "false"    
-  #   hosts:
-  #   - host: elk.brmania.com.br
-  #     path: "/"
-  #   tls:
-  #     enabled: true
-  #     secretName: brmania-server-tls
-  #     hosts:
-  #       - elk.brmania.com.br  
+        - elk.brmania.com.br  
 
   nodeSets:
   - name: default
