@@ -9,6 +9,8 @@ eck-elasticsearch:
   # Name of the Elasticsearch instance.
   #
   fullnameOverride: elasticsearch
+  service:
+    type: ClusterIP
   ingress:
     enabled: true
     annotations:
