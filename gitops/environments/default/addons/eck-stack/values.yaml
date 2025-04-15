@@ -206,7 +206,7 @@ eck-kibana:
     pathType: Prefix
     annotations:
       service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-      kubernetes.io/ingress.class: nginx
+      kubernetes.io/ingress.class: nginx-internal
       kubernetes.io/tls-acme: "true"
       #nginx.ingress.kubernetes.io/proxy-ssl-secret: "resources/elastic-certificate-pem"
       nginx.ingress.kubernetes.io/proxy-ssl-verify: "false" 
