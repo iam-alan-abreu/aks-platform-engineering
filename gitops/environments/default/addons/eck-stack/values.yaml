@@ -195,11 +195,12 @@ eck-kibana:
     # 0.0.0.0/0
     httpPortName: http
 
-  # http:
-  #   service:
-  #     metadata:
-  #       annotations:
-  #         service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  http:
+    service:
+      metadata:
+        annotations:
+          service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+      
 
   ingress:
     enabled: true
