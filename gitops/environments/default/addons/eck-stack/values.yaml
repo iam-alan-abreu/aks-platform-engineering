@@ -332,7 +332,7 @@ eck-agent:
 # If enabled, will use the eck-fleet-server chart and deploy a Fleet Server resource.
 #
 eck-fleet-server:
-  enabled: true
+  enabled: false
 
 # If enabled, will use the eck-beats chart and deploy a Beats resource.
 #
@@ -347,7 +347,7 @@ eck-logstash:
 # If enabled, will use the eck-apm-server chart and deploy a standalone APM Server resource.
 #
 eck-apm-server:
-  enabled: true
+  enabled: false
 
 # If enabled, will use the eck-enterprise-search chart and deploy a Enterprise Search resource.
 #
