@@ -209,6 +209,15 @@ eck-kibana:
     pathType: Prefix
     ingressClassName: "nginx-internal"
     ClassName: "nginx-internal"
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+          # Anotações para forçar HTTPS
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      
+      # Opcional: definir uma política de segurança mais rígida
+      nginx.ingress.kubernetes.io/ssl-prefer-server-ciphers: "true"
+      nginx.ingress.kubernetes.io/proxy-ssl-protocols: "TLSv1.2 TLSv1.3"
     hosts:
     - host: "kibana.brmania.com.br"
       path: "/"
