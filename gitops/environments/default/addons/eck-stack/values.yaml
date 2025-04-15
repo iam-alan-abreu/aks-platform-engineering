@@ -161,7 +161,13 @@ eck-kibana:
 
   config:
     server:
+      ssl:
+        enabled: true
+      host: "0.0.0.0"
       publicBaseUrl: https://kibana.brmania.com.br
+    xpack:
+      security:
+        enabled: true
     # xpack:
     #   security:
     #     enabled: true
