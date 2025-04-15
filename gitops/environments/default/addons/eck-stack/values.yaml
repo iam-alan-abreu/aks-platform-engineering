@@ -180,20 +180,16 @@ eck-kibana:
 
 
   service:
-    type: ClusterIP
+    type: LoadBalancer
     loadBalancerIP: ""
     port: 5601
     nodePort: ""
     labels: {}
-    annotations: {}
-    # cloud.google.com/load-balancer-type: "Internal"
-    # service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
-    # service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-    # service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
-    # service.beta.kubernetes.io/cce-load-balancer-internal-vpc: "true"
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
     loadBalancerSourceRanges: []
     # 0.0.0.0/0
-    httpPortName: http
+    httpPortName: https
 
   http:
     service:
