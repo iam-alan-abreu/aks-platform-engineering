@@ -218,6 +218,16 @@ eck-kibana:
     hosts:
     - host: "kibana.brmania.com.br"
       path: "/"
+    rules:
+      - http:
+          paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: elk-kibana-http
+                  port:
+                    name: https
     tls:
       enabled: true
       secretName: brmania-server-tls
