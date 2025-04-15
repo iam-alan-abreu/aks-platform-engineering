@@ -57,13 +57,13 @@ eck-elasticsearch:
           http:
             ssl:
               enabled: true
-              key: certs/cert.key
-              certificate: certs/cert.crt
+              key: certs/tls.key
+              certificate: certs/tls.crt
           transport:
             ssl:
               enabled: true
-              key: certs/cert.key
-              certificate: certs/cert.crt
+              key: certs/tls.key
+              certificate: certs/tls.crt
 
     podTemplate:
       spec:
@@ -71,6 +71,12 @@ eck-elasticsearch:
           - name: elasticsearch-certs
             secretName: elasticsearch-certs
             path: /usr/share/elasticsearch/config/certs
+        initContainers:
+        - name: sysctl
+          image: busybox
+          command: ["sysctl", "-w", "vm.max_map_count=262144"]
+          securityContext:
+            privileged: true
         volumeClaimTemplates:
             - metadata:
                 name: elasticsearch-data
@@ -81,10 +87,6 @@ eck-elasticsearch:
                   requests:
                     storage: 50Gi
                 storageClassName: managed
-        secretMounts:
-          - name: elasticsearch-certs
-            secretName: elasticsearch-certs
-            path: /usr/share/elasticsearch/config/certs
         tolerations:
         - key: "kubernetes.azure.com/scalesetpriority"
           operator: "Equal"
@@ -165,14 +167,14 @@ eck-kibana:
         http:
           ssl:
             enabled: true
-            key: certs/cert.key
-            certificate: certs/cert.crt
+            key: certs/tls.key
+            certificate: certs/tls.crt
             verification_mode: certificate
         transport:
           ssl:
             enabled: true
-            key: certs/cert.key
-            certificate: certs/cert.crt
+            key: certs/tls.key
+            certificate: certs/tls.crt
             verification_mode: certificate
 
 
