@@ -195,15 +195,25 @@ eck-kibana:
     httpPortName: https
 
   http:
-    service:   
-      spec:
-        type: LoadBalancer
+    service:
+      metadata:
+        annotations:
+          service.beta.kubernetes.io/azure-load-balancer-internal: "false"
+
+  ingress:
+    enabled: true
+    pathType: Prefix
+    hosts:
+    - host: "kibana.argoit.net.dev"
+      path: "/"
+    tls:
+      enabled: true
   podTemplate:
     spec:
-      secretMounts:
-        - name: elasticsearch-certs
-          secretName: elasticsearch-certs
-          path: /usr/share/elasticsearch/config/certs
+      # secretMounts:
+      #   - name: elasticsearch-certs
+      #     secretName: elasticsearch-certs
+      #     path: /usr/share/elasticsearch/config/certs
       readinessProbe:
         failureThreshold: 3
         initialDelaySeconds: 20
