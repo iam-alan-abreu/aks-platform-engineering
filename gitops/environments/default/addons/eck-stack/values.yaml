@@ -184,15 +184,15 @@ eck-kibana:
 
   service:
     type: LoadBalancer
-    loadBalancerIP: ""
-    port: 5601
-    nodePort: ""
-    labels: {}
-    annotations:
-      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-    loadBalancerSourceRanges: []
-    # 0.0.0.0/0
-    httpPortName: https
+    # loadBalancerIP: ""
+    # port: 5601
+    # nodePort: ""
+    # labels: {}
+    # annotations:
+    #   service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    # loadBalancerSourceRanges: []
+    # # 0.0.0.0/0
+    # httpPortName: https
 
   http:
     service:
@@ -218,8 +218,8 @@ eck-kibana:
     hosts:
     - host: "kibana.brmania.com.br"
       path: "/"
-      port:
-        name: https
+      port: https
+  
     tls:
       enabled: true
       secretName: brmania-server-tls
