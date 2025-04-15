@@ -28,7 +28,7 @@ eck-elasticsearch:
     ingressClassName: "nginx-internal"
     ClassName: "nginx-internal"
     annotations:
-      service.beta.kubernetes.io/azure-load-balancer-internal: "false"    
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"    
     hosts:
     - host: elk.brmania.com.br
       path: "/"
@@ -208,6 +208,9 @@ eck-kibana:
       path: "/"
     tls:
       enabled: true
+      secretName: brmania-server-tls
+      hosts:
+        - kibana.brmania.com.br
   podTemplate:
     spec:
       # secretMounts:
