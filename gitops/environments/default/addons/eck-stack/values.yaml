@@ -25,18 +25,29 @@ eck-elasticsearch:
   ingress:
     enabled: true
     pathType: Prefix
-    ingressClassName: "nginx-internal"
-    ClassName: "nginx-internal"
     annotations:
-      service.beta.kubernetes.io/azure-load-balancer-internal: "true"    
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+      kubernetes.io/ingress.class: nginx-internal
+      kubernetes.io/tls-acme: "true"
+      #nginx.ingress.kubernetes.io/proxy-ssl-secret: "resources/elastic-certificate-pem"
+      nginx.ingress.kubernetes.io/proxy-ssl-verify: "false" 
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      # Opcional: definir uma política de segurança mais rígida
+      nginx.ingress.kubernetes.io/ssl-prefer-server-ciphers: "true"
+      nginx.ingress.kubernetes.io/proxy-ssl-protocols: "TLSv1.2 TLSv1.3"
+    ingressClassName: nginx-internal
     hosts:
-    - host: elk.brmania.com.br
+    - host: "els.brmania.com.br"
       path: "/"
+      port: http
+
     tls:
       enabled: true
       secretName: brmania-server-tls
       hosts:
-        - elk.brmania.com.br  
+        - els.brmania.com.br
 
   nodeSets:
   - name: default
