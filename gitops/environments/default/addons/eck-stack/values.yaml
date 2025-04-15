@@ -179,17 +179,17 @@ eck-kibana:
     #         verification_mode: certificate
 
 
-  service:
-    type: LoadBalancer
-    loadBalancerIP: ""
-    port: 5601
-    nodePort: ""
-    labels: {}
-    annotations:
-      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-    loadBalancerSourceRanges: []
-    # 0.0.0.0/0
-    httpPortName: https
+  # service:
+  #   type: LoadBalancer
+  #   loadBalancerIP: ""
+  #   port: 5601
+  #   nodePort: ""
+  #   labels: {}
+  #   annotations:
+  #     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  #   loadBalancerSourceRanges: []
+  #   # 0.0.0.0/0
+  #   httpPortName: https
 
   http:
     service:
