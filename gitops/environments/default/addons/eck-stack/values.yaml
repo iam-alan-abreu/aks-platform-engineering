@@ -147,7 +147,6 @@ eck-elasticsearch:
               cpu: 2
       
     
-  
 
 # If enabled, will use the eck-kibana chart and deploy a Kibana resource.
 #
@@ -204,7 +203,7 @@ eck-kibana:
     enabled: true
     pathType: Prefix
     hosts:
-    - host: "kibana.argoit.net.dev"
+    - host: "kibana.brmania.com.br"
       path: "/"
     tls:
       enabled: true
