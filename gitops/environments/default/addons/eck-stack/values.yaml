@@ -337,47 +337,8 @@ eck-fleet-server:
   elasticsearchRef:
     name: elasticsearch
 
-  config:
-    server:
-      ssl:
-        enabled: true
-      host: "0.0.0.0"
-      publicBaseUrl: https://kibana.brmania.com.br
-    # xpack:
-    #   security:
-    #     enabled: true
-    #     http:
-    #       ssl:
-    #         enabled: true
-    #         key: certs/tls.key
-    #         certificate: certs/tls.crt
-    #         verification_mode: certificate
-    #     transport:
-    #       ssl:
-    #         enabled: true
-    #         key: certs/tls.key
-    #         certificate: certs/tls.crt
-    #         verification_mode: certificate
-
-
   service:
     type: ClusterIP
-    # loadBalancerIP: ""
-    # port: 5601
-    # nodePort: ""
-    # labels: {}
-    # annotations:
-    #   service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-    # loadBalancerSourceRanges: []
-    # # 0.0.0.0/0
-    # httpPortName: https
-
-  http:
-    service:
-      metadata:
-        annotations:
-          service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-      
 
   ingress:
     enabled: true
@@ -434,7 +395,7 @@ eck-fleet-server:
             podAffinityTerm:
               labelSelector:
                 matchExpressions:
-                - key: kibana.k8s.elastic.co/name
+                - key: fleet-server.k8s.elastic.co/name
                   operator: In
                   values:
                   - fleet-server
@@ -469,7 +430,7 @@ eck-fleet-server:
         whenUnsatisfiable: DoNotSchedule
         labelSelector:
           matchLabels:
-            kibana.k8s.elastic.co/name: fleet-server
+            fleet-server.k8s.elastic.co/name: fleet-server
 
 # If enabled, will use the eck-beats chart and deploy a Beats resource.
 #
