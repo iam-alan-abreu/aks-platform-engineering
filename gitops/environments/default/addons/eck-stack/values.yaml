@@ -47,23 +47,23 @@ eck-elasticsearch:
     config:
       node.store.allow_mmap: false
       # Enable anonymous access to allow GCLB health probes to succeed
-      xpack:
-        security:
-          enabled: true
-          authc:
-            anonymous:
-              username: anon
-              roles: monitoring_user
-          http:
-            ssl:
-              enabled: true
-              key: certs/tls.key
-              certificate: certs/tls.crt
-          transport:
-            ssl:
-              enabled: true
-              key: certs/tls.key
-              certificate: certs/tls.crt
+      # xpack:
+      #   security:
+      #     enabled: true
+      #     authc:
+      #       anonymous:
+      #         username: anon
+      #         roles: monitoring_user
+      #     http:
+      #       ssl:
+      #         enabled: true
+      #         key: certs/tls.key
+      #         certificate: certs/tls.crt
+      #     transport:
+      #       ssl:
+      #         enabled: true
+      #         key: certs/tls.key
+      #         certificate: certs/tls.crt
 
     podTemplate:
       spec:
@@ -161,21 +161,21 @@ eck-kibana:
   config:
     server:
       publicBaseUrl: https://kibana.brmania.com.br
-    xpack:
-      security:
-        enabled: true
-        http:
-          ssl:
-            enabled: true
-            key: certs/tls.key
-            certificate: certs/tls.crt
-            verification_mode: certificate
-        transport:
-          ssl:
-            enabled: true
-            key: certs/tls.key
-            certificate: certs/tls.crt
-            verification_mode: certificate
+    # xpack:
+    #   security:
+    #     enabled: true
+    #     http:
+    #       ssl:
+    #         enabled: true
+    #         key: certs/tls.key
+    #         certificate: certs/tls.crt
+    #         verification_mode: certificate
+    #     transport:
+    #       ssl:
+    #         enabled: true
+    #         key: certs/tls.key
+    #         certificate: certs/tls.crt
+    #         verification_mode: certificate
 
 
   service:
