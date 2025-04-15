@@ -193,17 +193,19 @@ eck-kibana:
     # service.beta.kubernetes.io/cce-load-balancer-internal-vpc: "true"
     loadBalancerSourceRanges: []
     # 0.0.0.0/0
-    httpPortName: https
+    httpPortName: http
 
-  http:
-    service:
-      metadata:
-        annotations:
-          service.beta.kubernetes.io/azure-load-balancer-internal: "false"
+  # http:
+  #   service:
+  #     metadata:
+  #       annotations:
+  #         service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 
   ingress:
     enabled: true
     pathType: Prefix
+    ingressClassName: "nginx-internal"
+    ClassName: "nginx-internal"
     hosts:
     - host: "kibana.brmania.com.br"
       path: "/"
