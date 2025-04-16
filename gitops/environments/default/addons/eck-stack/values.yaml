@@ -592,7 +592,7 @@ eck-logstash:
 # If enabled, will use the eck-apm-server chart and deploy a standalone APM Server resource.
 #
 eck-apm-server:
-  enabled: true
+  enabled: false
 
   elasticsearchRef:
     name: elasticsearch
