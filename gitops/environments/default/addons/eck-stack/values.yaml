@@ -157,7 +157,7 @@ eck-elasticsearch:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 50Gi
+            storage: 1Gi
         storageClassName: managed
 
   - name: hot
