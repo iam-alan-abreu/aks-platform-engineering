@@ -159,7 +159,6 @@ eck-elasticsearch:
           requests:
             storage: 50Gi
         storageClassName: managed
-        volumeMode: Filesystem
 
   - name: hot
     count: 1
@@ -230,18 +229,7 @@ eck-elasticsearch:
     # Volume Claim settings.
     # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
     #
-    volumeClaimTemplates:
-    - metadata:
-        name: elasticsearch-data-hot
-      spec:
-        accessModes:
-        - ReadWriteOnce
-        resources:
-          requests:
-            storage: 50Gi
-        # Adjust to your storage class name
-        #
-        storageClassName: managed
+
 
   - name: warm
     count: 1
@@ -312,18 +300,7 @@ eck-elasticsearch:
     # Volume Claim settings.
     # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
     #
-    volumeClaimTemplates:
-    - metadata:
-        name: elasticsearch-data-warm
-      spec:
-        accessModes:
-        - ReadWriteOnce
-        resources:
-          requests:
-            storage: 20Gi
-        # Adjust to your storage class name
-        #
-        storageClassName: managed      
+    
     
   - name: cold
     count: 1
@@ -394,18 +371,7 @@ eck-elasticsearch:
     # Volume Claim settings.
     # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
     #
-    volumeClaimTemplates:
-    - metadata:
-        name: elasticsearch-data-cold
-      spec:
-        accessModes:
-        - ReadWriteOnce
-        resources:
-          requests:
-            storage: 20Gi
-        # Adjust to your storage class name
-        #
-        storageClassName: managed
+  
 # If enabled, will use the eck-kibana chart and deploy a Kibana resource.
 #
 eck-kibana:
