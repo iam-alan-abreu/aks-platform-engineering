@@ -147,8 +147,11 @@ eck-elasticsearch:
         - name: elasticsearch
           resources:
             limits:
+              cpu: '2'
               memory: 8Gi
-              cpu: 2
+            requests:
+              cpu: '0.5'
+              memory: 1Gi
     # volumeClaimTemplates:
     # - metadata:
     #     name: elasticsearch-data
@@ -178,6 +181,9 @@ eck-elasticsearch:
             limits:
               memory: 8Gi
               cpu: 2
+            requests:
+              cpu: '0.5'
+              memory: 1Gi
         # Affinity/Anti-affinity settings for controlling the 'spreading' of Elasticsearch
         # pods across existing hosts.
         # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
@@ -258,6 +264,9 @@ eck-elasticsearch:
             limits:
               memory: 8Gi
               cpu: 2
+            requests:
+              cpu: '0.5'
+              memory: 1Gi
         # Affinity/Anti-affinity settings for controlling the 'spreading' of Elasticsearch
         # pods across existing hosts.
         # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
@@ -338,6 +347,9 @@ eck-elasticsearch:
             limits:
               memory: 8Gi
               cpu: 2
+            requests:
+              cpu: '0.5'
+              memory: 1Gi
         # Affinity/Anti-affinity settings for controlling the 'spreading' of Elasticsearch
         # pods across existing hosts.
         # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
