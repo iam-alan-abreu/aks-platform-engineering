@@ -193,7 +193,7 @@ eck-elasticsearch:
                   - key: elasticsearch.k8s.elastic.co/statefulset-name
                     operator: In
                     values:
-                    - elasticsearch-es-default
+                    - elasticsearch-es-hot
                 topologyKey: kubernetes.io/hostname
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -225,7 +225,7 @@ eck-elasticsearch:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              elasticsearch.k8s.elastic.co/statefulset-name: elasticsearch-es-default
+              elasticsearch.k8s.elastic.co/statefulset-name: elasticsearch-es-hot
     # Volume Claim settings.
     # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
     #
@@ -264,7 +264,7 @@ eck-elasticsearch:
                   - key: elasticsearch.k8s.elastic.co/statefulset-name
                     operator: In
                     values:
-                    - elasticsearch-es-default
+                    - elasticsearch-es-warm
                 topologyKey: kubernetes.io/hostname
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -296,7 +296,7 @@ eck-elasticsearch:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              elasticsearch.k8s.elastic.co/statefulset-name: elasticsearch-es-default
+              elasticsearch.k8s.elastic.co/statefulset-name: elasticsearch-es-warm
     # Volume Claim settings.
     # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
     #
@@ -335,7 +335,7 @@ eck-elasticsearch:
                   - key: elasticsearch.k8s.elastic.co/statefulset-name
                     operator: In
                     values:
-                    - elasticsearch-es-default
+                    - elasticsearch-es-cold
                 topologyKey: kubernetes.io/hostname
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -367,7 +367,7 @@ eck-elasticsearch:
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
             matchLabels:
-              elasticsearch.k8s.elastic.co/statefulset-name: elasticsearch-es-default
+              elasticsearch.k8s.elastic.co/statefulset-name: elasticsearch-es-cold
     # Volume Claim settings.
     # ref: https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-volume-claim-templates.html
     #
