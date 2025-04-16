@@ -7,7 +7,7 @@ controller:
   replicaCount: 3
   service:
     annotations:
-    loadBalancerIP: ""
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
     externalTrafficPolicy: Local
   config:
     use-forwarded-headers: "true"
