@@ -149,16 +149,16 @@ eck-elasticsearch:
             limits:
               memory: 8Gi
               cpu: 2
-    volumeClaimTemplates:
-    - metadata:
-        name: elasticsearch-data
-      spec:
-        accessModes:
-        - ReadWriteOnce
-        resources:
-          requests:
-            storage: 1Gi
-        storageClassName: managed
+    # volumeClaimTemplates:
+    # - metadata:
+    #     name: elasticsearch-data
+    #   spec:
+    #     accessModes:
+    #     - ReadWriteOnce
+    #     resources:
+    #       requests:
+    #         storage: 1Gi
+    #     storageClassName: managed
 
   - name: hot
     count: 1
