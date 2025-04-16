@@ -232,7 +232,7 @@ eck-elasticsearch:
     #
     volumeClaimTemplates:
     - metadata:
-        name: elasticsearch-data
+        name: elasticsearch-data-hot
       spec:
         accessModes:
         - ReadWriteOnce
@@ -314,7 +314,7 @@ eck-elasticsearch:
     #
     volumeClaimTemplates:
     - metadata:
-        name: elasticsearch-data
+        name: elasticsearch-data-warm
       spec:
         accessModes:
         - ReadWriteOnce
@@ -396,13 +396,13 @@ eck-elasticsearch:
     #
     volumeClaimTemplates:
     - metadata:
-        name: elasticsearch-data
+        name: elasticsearch-data-cold
       spec:
         accessModes:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 50Gi
+            storage: 20Gi
         # Adjust to your storage class name
         #
         storageClassName: managed
