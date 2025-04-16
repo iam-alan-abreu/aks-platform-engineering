@@ -421,9 +421,6 @@ eck-kibana:
         enabled: true
       host: "0.0.0.0"
       publicBaseUrl: https://kibana.brmania.com.br
-    xpack.fleet.packages:
-    - name: apm
-      version: latest
 
     # xpack:
     #   security:
