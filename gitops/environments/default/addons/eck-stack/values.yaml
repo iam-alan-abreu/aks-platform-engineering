@@ -587,6 +587,7 @@ eck-fleet-server:
     name: elasticsearch
   kibanaRef:
     name: kibana
+  deployment: {}
 
 # If enabled, will use the eck-beats chart and deploy a Beats resource.
 #
